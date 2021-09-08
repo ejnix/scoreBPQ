@@ -1,0 +1,19 @@
+Package: scoreBPQ
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Evan",
+           family = "Nix",
+           role = c("cre"),
+           email = "ejnix@iu.edu")
+Description: This package takes raw items from the Body Perception Questionnaire and scores them according to the inputted form. Returns tScores, Percentiles, and Missing Percentage for each subscale and each observation.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9000
+Imports: 
+    stats,
+    dplyr
+Depends: 
+    R (>= 2.10)

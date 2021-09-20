@@ -1,11 +1,19 @@
 Package: scoreBPQ
-Title: What the Package Does (One Line, Title Case)
+Title: A package to quickly score the Body Perception Questionnaire. Takes raw data and outputs summary scores by subscale.
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Evan",
+    c(person(given = "Logan",
+           family = "Holmes",
+           role = c("aut", "cre"),
+           email = "lgholmes@indiana.edu"),
+      person(given = "Evan",
            family = "Nix",
            role = c("cre"),
-           email = "ejnix@iu.edu")
+           email = "ejnix@iu.edu"),
+      person(given = "Jacek",
+           family = "Kolacz",
+           role = c("aut"),
+           email = "jkolacz@iu.edu"))
 Description: This package takes raw items from the Body Perception Questionnaire and scores them according to the inputted form. Returns tScores, Percentiles, and Missing Percentage for each subscale and each observation.
 License: MIT + file LICENSE
 Encoding: UTF-8

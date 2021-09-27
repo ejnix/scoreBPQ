@@ -1,0 +1,99 @@
+---
+title: "Introduction to scoreBPQ"
+author: "Original R code by Logan Holmes. Package and Vignette created by Evan Nix. Based on Psychometric Research by Jacek Kolacz."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{scoreBPQ-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+The scoreBPQ package makes scoring the Body Perception Questionnaire fast and easy, but some initial checks must be made to ensure that the data is formatted properly.
+
+* In order for the scoring function to work properly, data must be in the proper form:
+    * All bpq items have the prefix "bpq_"
+    * All bpq items must be properly numbered, from 1 to total number of items. 
+      * Common Error: numbering each subscale separately. This will break the code.
+    * The correct form must be set as an argument in the function call (Default: Short Form)
+    
+For detailed descriptions of item numbers for each form, see Page 14 of the BPQ Manual: https://static1.squarespace.com/static/5c1d025fb27e390a78569537/t/5ccd9de46e9a7f37d527bbc9/1556979173189/BPQ_Information_and_Scoring_v2_091518.pdf
+
+---
+
+# Example Use
+
+
+```{r setup}
+library(scoreBPQ)
+```
+
+## Data: test_data
+An example dataset has been included in the package as a reference for what properly formatted raw data should look like. This dataset is documented in ?test_data. We can view this dataset at any time by calling test_data in the R console.
+```{r}
+test_data
+```
+
+
+test_data is an example of the BPQ short form, which contains 46 items. 
+
+## BPQ_all_scoring
+
+The scoreBPQ package contains several functions, but they are structured in a way to interact with each other behind the scenes. Once you have formatted your data, all you need to use is the function **BPQ_all_scoring**. This function will do all the work in the background and output a scored dataframe.
+
+---
+
+In order to score test_data, all we need to do is call the function BPQ_all_scoring. 
+
+* The first argument: df, is the input dataframe, 
+* The second argument: form, is the form of the Body Perception Questionnaire, 
+    * More information on how to use different forms can be found in the documentation ?BPQ_all_scoring
+* The third argument: version, is the population norms that the data will be compared to. Population norms were collected in 2018 and 2020. It is advised to use version = 2020 for all new data, but certain users will want to compare to the older norms, perhaps if their study took place in 2018.
+```{r}
+
+# Outputs original dataframe, with scored subscales appended to the end of the dataframe.
+BPQ_all_scoring(df = test_data, form = "SF", version = 2020)
+
+
+```
+
+In the output, you will find all scored subscales, and the percent of missing data for each subscale appended to the end of the input dataframe.
+
+
+## Common Errors
+### Incorrect column names
+A common error is a mistake in the column names of the bpq items. To simulate this, we will create a new dataframe, test_data_incorrect, by renaming all the prefixes from 'bpq' to 'body_perception'.
+```{r results='hide'}
+library(tidyverse)
+```
+
+
+```{r}
+test_data_incorrect <- test_data %>% 
+  rename_all(~gsub("bpq", "body_perception", .))
+```
+
+
+```{r, error=T, purl=F}
+BPQ_all_scoring(test_data_incorrect)
+```
+
+
+### Calling the wrong functions
+As previously stated, there are several functions included in the package. These can be used to score individual responses, but if given an entire dataset of multiple responses, they will break.
+```{r, error=T, purl=F}
+BPQ_single_scoring(test_data)
+```
+
+Remember to always use the function BPQ_all_scoring when scoring multiple observations.
+
+
+

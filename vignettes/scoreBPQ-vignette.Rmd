@@ -31,6 +31,12 @@ For detailed descriptions of item numbers for each form, see Page 14 of the BPQ 
 
 # Example Use
 
+## Installation
+```{r, warning = F, message = F}
+devtools::install_github("ejnix/scoreBPQ")
+```
+
+
 
 ```{r setup}
 library(scoreBPQ)
@@ -96,4 +102,41 @@ BPQ_single_scoring(test_data)
 Remember to always use the function BPQ_all_scoring when scoring multiple observations.
 
 
+### Using non-numeric data
+Another common error is to input the character string responses instead of their numeric conversions. To simulate this, we will create a new dataframe, test_data_character, by changing all the numbers back to their character string analogues.
+```{r}
+test_data_character <- test_data %>% 
+  mutate_at(vars(starts_with('bpq')),
+                 ~case_when(. == 1 ~ 'Never',
+                            . == 2 ~ 'Occasionally',
+                            . == 3 ~ 'Sometimes',
+                            . == 4 ~ 'Usually',
+                            . == 5 ~ 'Always'))
+```
+
+```{r, error=T, purl=F, warning = F}
+BPQ_all_scoring(test_data_character)
+
+```
+
+Observe how the function still runs, and gives an output, but all the subscale scores are NA, and the Percent Missing for each subscale is 100%. 
+
+
+### Own codes for missing values
+Some users code missing values with some value other than NA, such as -99 or 999. This will cause the function output to have incorrect values, and all the percent missing columns to show 0.
+
+First we will simulate this error by creating a new dataframe, test_data_missing, by changing missing values to -99.
+```{r}
+test_data_missing <- test_data %>% 
+  mutate_all(~ifelse(is.na(.), -99, .))
+
+test_data_missing
+```
+
+
+```{r}
+BPQ_all_scoring(test_data_missing)
+```
+
+Observe the effect on the subscale scores, which should never be negative. Be sure to change all missing values to NA prior to running BPQ_all_scoring.
 

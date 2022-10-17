@@ -22,7 +22,7 @@ data is formatted properly.
 
 For detailed descriptions of item numbers for each form, see Page 14 of
 the BPQ Manual:
-<https://static1.squarespace.com/static/5c1d025fb27e390a78569537/t/5ccd9de46e9a7f37d527bbc9/1556979173189/BPQ_Information_and_Scoring_v2_091518.pdf>
+<[https://static1.squarespace.com/static/5c1d025fb27e390a78569537/t/5ccd9de46e9a7f37d527bbc9/1556979173189/BPQ_Information_and_Scoring_v2_091518.pdf](https://www.traumascience.org/s/BPQ-Manual-V2-3722.pdf)>
 
 ------------------------------------------------------------------------
 

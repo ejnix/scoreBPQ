@@ -269,7 +269,7 @@ BPQ_raw_scoring <- function(df, form = "SF") {
       df[row,] <- mutate_at(df[row,], vars(all_of(scale)), ~ifelse(is.na(.), med, .))
     }
     if (form %in% c("OF", "SF", "CReact")) {
-      NAcount <- sum(is.na(df[row, union(BPQ_sup_react, BPQ_sub_react)]))
+      NAcount <- 100 * sum(is.na(df[row, union(BPQ_sup_react, BPQ_sub_react)])) / length(union(BPQ_sup_react, BPQ_sub_react))
       percentMissing <- c(percentMissing, NAcount)
     }
     names(percentMissing) <- names(NApercents)
